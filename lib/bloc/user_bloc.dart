@@ -30,6 +30,12 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   void _mapToStateDeleteUser(DeleteUser event, Emitter<UserState> emit) {
     emit(UserLoading());
     lists.removeWhere((element) => element.id == event.id);
-    emit(UserDelete(lists));
+
+    Future.delayed(const Duration(seconds: 2)).whenComplete(() => emit(UserDelete(lists)));
+  }
+
+  Future<void> emitDelete(List<UserModel> lists) {
+    return Future.delayed(
+        const Duration(seconds: 2), () => emit(UserDelete(lists)));
   }
 }
